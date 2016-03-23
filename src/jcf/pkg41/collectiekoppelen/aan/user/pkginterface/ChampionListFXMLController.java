@@ -89,6 +89,7 @@ public class ChampionListFXMLController implements Initializable {
         champions.add(new Champion("Anivia","10-07-2009",10, "Mage"));
         champions.add(new Champion("Annie","21-02-2009",6, "Mage"));
         champions.add(new Champion("Ashe","21-02-2009",4, "Marksman"));
+        champions.add(new Champion("Aurelion Sol","23-03-2016",0, "Mage"));
         champions.add(new Champion("Azir","16-09-2014",9, "Mage"));
         champions.add(new Champion("Bard","12-03-2015",9, "Support"));
         champions.add(new Champion("Blitzcrank","02-09-2009",4, "Tank"));
