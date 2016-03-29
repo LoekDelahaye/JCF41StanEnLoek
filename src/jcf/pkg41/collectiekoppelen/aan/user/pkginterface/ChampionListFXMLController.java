@@ -5,6 +5,7 @@
  */
 package collectie.koppelen.aan.de.user.pkginterface;
 
+import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,8 +14,11 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -27,7 +31,7 @@ import javafx.scene.control.TreeView;
 public class ChampionListFXMLController implements Initializable {
 
     
-    
+
     @FXML
     private TreeView tvChampions;
     
@@ -37,6 +41,7 @@ public class ChampionListFXMLController implements Initializable {
     private List<Champion> champions;
     //Om GUI en list hetzelfde te houden
     private ObservableList<Champion> observableChampions;
+
     
     private List<Ability> abilities;
     
@@ -47,6 +52,7 @@ public class ChampionListFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         generateChampions();
         generateAbilities();
+        fillTable();
         
         TreeItem<String> rootItem = new TreeItem<String> ("Roles");
         rootItem.setExpanded(true);
@@ -63,8 +69,7 @@ public class ChampionListFXMLController implements Initializable {
             rootItem.getChildren().add(item);
         }
         
-        //Add champs to those roles
-        
+        //Add champs to those roles        
         for(Champion champ : champions) {
             TreeItem<String> item = new TreeItem<String> (champ.getName());   
             for(TreeItem<String> role : rootItem.getChildren()) {
@@ -75,6 +80,17 @@ public class ChampionListFXMLController implements Initializable {
             
         }
         tvChampions.setRoot(rootItem);
+        tvChampions.setEditable(true);
+        tvChampions.setOnEditStart(new EventHandler<TreeView.EditEvent<String>>() {
+            @Override
+            public void handle(TreeView.EditEvent<String> event) {
+                for (Champion champion : champions) {
+                    if (champion.getName().equalsIgnoreCase(event.getTreeItem().getValue())) {
+                        System.out.println("test");
+                    }
+                }
+            }
+        });
     }
     
     public void generateChampions() {
@@ -333,6 +349,21 @@ public class ChampionListFXMLController implements Initializable {
         abilities.add(new Ability("W","Valkyrie / Special Delivery"));
         abilities.add(new Ability("E","Gatling Gun"));
         abilities.add(new Ability("R","Missle Barrage"));
+        
+    }
+   
+    
+    private void fillTable(){
+
+        TableColumn NameCol = new TableColumn("Name");
+        TableColumn releaseDateCol = new TableColumn("Difficulty");
+        TableColumn difficultyCol = new TableColumn("Category");
+        TableColumn categoryCol = new TableColumn("Abilities");
+        
+        tvInformation.getColumns().addAll(NameCol, releaseDateCol, difficultyCol,categoryCol);
+    }
+    
+    private void addRow(){
         
     }
     
